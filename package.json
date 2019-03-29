@@ -1,0 +1,16 @@
+{
+    "name": "cometd-middleware",
+    "version": "1.0.0",
+    "description": "",
+    "main": "node-cometd-middleware.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "async": "^2.6.2",
+        "cometd-nodejs-server": "^1.0.3",
+        "jsforce": ""
+    }
+}
