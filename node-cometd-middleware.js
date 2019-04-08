@@ -4,13 +4,12 @@ const async = require("async");
 const cometd = require('cometd-nodejs-server');
 
 
-const loginUrl = 
-const uid      = 
-const pwd      = 
-const channel  = 
+const loginUrl = process.env.SF_URI;
+const uid = process.env.SF_UID;
+const pwd = process.env.SF_PWD;
+const channel = process.env.SF_CHANNEL;
 
 const conn = new jsforce.Connection({
-    // you can change loginUrl to connect to sandbox or prerelease env.
     loginUrl : loginUrl
 });
 
@@ -21,7 +20,7 @@ const cometdServer = cometd.createCometDServer({
     loglevel : 'debug'
 });
 const httpServer = http.createServer(cometdServer.handle);
-httpServer.listen(80, function() {
+httpServer.listen(9000, function() {
     var port = httpServer.address().port;
     console.log('listening on localhost:' + port);
     _uri = 'http://localhost:' + port + '/cometd';
@@ -76,14 +75,8 @@ async.parallel([
             console.log('*** CometD Listener');
             console.dir(message);
 
-
             // Invoke the callback to signal that handling is complete.
             callback();
         });
     }
 ]);
-
-
-
-
-
