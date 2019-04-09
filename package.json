@@ -10,8 +10,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "async": "^2.6.2",
-        "cometd-nodejs-server": "^1.0.3",
-        "jsforce": ""
+        "jsforce": "",
+        "async" : "",
+        "http" : "",
+        "cometd-nodejs-server" : ""
     }
 }
