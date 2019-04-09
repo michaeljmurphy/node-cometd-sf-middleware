@@ -5,12 +5,12 @@ const cometd = require('cometd-nodejs-server');
 
 
 const loginUrl = process.env.SF_URI;
-const uid = process.env.SF_UID;
-const pwd = process.env.SF_PWD;
+const sessionToken = process.env.SF_TOKEN;
 const channel = process.env.SF_CHANNEL;
 
 const conn = new jsforce.Connection({
-    loginUrl : loginUrl
+    instanceUrl : loginUrl,
+    accessToken : sessionToken
 });
 
 
@@ -32,17 +32,6 @@ const cometDChannel = cometdServer.createServerChannel(channel);
 console.dir(cometDChannel);
 console.dir(cometDChannel.publish);
 
-/* This function subscribes to the Salesforce EMP
-/* and publishes messages to the local cometd server 
-/* that we created earlier */
-function doPubSub() {
-    console.log('doSubscribe(): ' + channel);
-    conn.streaming.topic(channel).subscribe(function(message) {
-        console.log('*** SF Listener');
-        console.dir(message);
-        cometDChannel.publish(null, message);
-    });
-}
 
 /* In parallel we need to create a session
 /* with SF and listen to messages that are
@@ -51,22 +40,19 @@ function doPubSub() {
 /* This will not be necessary outside
 /* of testing purposes */
 async.parallel([
-    function doLogin() {
-        console.log('doLogin()');
-        conn.login(uid, pwd, function(err, userInfo) {
-            if (err) { return console.error(err); }
-            // Now you can get the access token and instance URL information.
-            // Save them to establish connection next time.bscra
-            console.log('URI: ' + conn.instanceUrl);
-            console.log('Access Token: ' + conn.accessToken);
-            // logged in user property
-            console.log("User ID: " + userInfo.id);
-            console.log("Org ID: " + userInfo.organizationId);
+    /* This function subscribes to the Salesforce EMP
+    /* and publishes messages to the local cometd server 
+    /* that we created earlier */
 
-            doPubSub();
+    function doPubSub() {
+        console.log('doSubscribe(): ' + channel);
+        conn.streaming.topic(channel).subscribe(function(message) {
+            console.log('*** SF Listener');
+            console.dir(message);
+            cometDChannel.publish(null, message);
         });
     },
-
+    
     function listenToChannel() {
         console.log('listenToChannel()');
 

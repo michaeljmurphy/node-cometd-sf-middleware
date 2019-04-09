@@ -2,9 +2,7 @@ runtime: node
 env:
     - name: SF_URI
       value: "{SF_URI_GOES_HERE}"
-    - name: SF_UID
-      value: "{UID_GOES_HERE}"
-    - name: SF_PWD
-      value: "{PASSWORD_GOES_HERE}"
+    - name: SF_TOKEN
+      value: "{TOKEN_GOES_HERE}"
     - name: SF_CHANNEL
       value: "{CHANNEL_GOES_HERE}"
